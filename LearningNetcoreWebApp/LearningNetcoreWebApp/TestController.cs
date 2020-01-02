@@ -15,14 +15,14 @@ namespace LearningNetcoreWebApp
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "value3" };
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "value is changed";
         }
 
         // POST api/<controller>
