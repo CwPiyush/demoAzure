@@ -27,7 +27,7 @@ namespace LearningNetcoreWebApp
             return Ok(result);
         }
 
-        [HttpGet, Route("api/v2/autocomplete/car/")]
+        [HttpGet, Route("autocomplete/car/")]
         public async Task<IActionResult> GetCarSuggestions()
         {
 

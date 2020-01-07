@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Vehicle Search";
+}
+<h2>@ViewData["Title"]</h2>
+<head>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    <link href="~/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+    <style>
+        .disabled {
+            pointer-events: all !important;
+        }
+    </style>
+</head>
+<div class="form-group">
+    <div class="input-group">
+        <label class="form-check-label">Year</label>&nbsp;
+        <select class="dropdown" id="year" onchange="enableTextBox()">
+            <option value="">Select</option>
+            <option value="2020">2020</option>
+            <option value="2019">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+        </select>&nbsp;&nbsp;
+        <label class="form-check-label">Enter Model</label>&nbsp;
+        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+              data-placement="right" title="Select Year to Enter Model">
+            <input type="search" class="input-group-text" id="txtboxsearch"  disabled />
+        </span><br/>
+    
+    </div>
+</div>
+<script type="text/javascript">
+    var enableTextBox = function () {
+        if (document.getElementById('year').value != '')
+            document.getElementById('txtboxsearch').disabled = false;
+        else
+            document.getElementById('txtboxsearch').disabled = true;
+    }
+
+ var options = {
+    url: "api/search/autocomplete/car/?year=2020&term=ma",
+
+    getValue: "name",
+
+    template: {
+        type: "description",
+        fields: {
+            description: "email"
+        }
+    },
+
+    list: {
+        match: {
+            enabled: true
+        }
+    },
+
+    theme: "plate-dark"
+};
+
+$("#txtboxsearch").easyAutocomplete(options);        
+    
+</script>
