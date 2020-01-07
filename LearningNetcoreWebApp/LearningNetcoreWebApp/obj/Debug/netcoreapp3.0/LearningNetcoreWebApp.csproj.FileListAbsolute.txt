@@ -47,7 +47,6 @@ C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebAp
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.csprojAssemblyReference.cache
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\staticwebassets\LearningNetcoreWebApp.StaticWebAssets.Manifest.cache
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\staticwebassets\LearningNetcoreWebApp.StaticWebAssets.xml
-C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.RazorAssemblyInfo.cache
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.RazorAssemblyInfo.cs
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.AssemblyInfoInputs.cache
@@ -68,3 +67,7 @@ C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebAp
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.dll
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.pdb
 C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.csproj.CopyComplete
+C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\bin\Debug\netcoreapp3.0\Elasticsearch.Net.dll
+C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\bin\Debug\netcoreapp3.0\Nest.dll
+C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
+C:\Users\sahup\source\repos\demoAzure\LearningNetcoreWebApp\LearningNetcoreWebApp\obj\Debug\netcoreapp3.0\LearningNetcoreWebApp.MvcApplicationPartsAssemblyInfo.cache
