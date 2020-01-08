@@ -23,18 +23,40 @@ namespace LearningNetcoreWebApp
         public List<make> GetResult(string condition)
         {
 
-            if (client.IndexExists("car").Exists)
+            if (client.IndexExists("vehiclecars").Exists)
             {
+                //var query = condition;
+                //var res = client.Search<make>(s => s
+                //.Query(q => q
+                //.Match(m => m
+                //.Field(f => f.Name)
+                //.Field(f => f.Year)
+                //.Query(query)))
+                //);
+                //var doc = res.Documents;
+                //return doc.ToList<make>();
+
                 var query = condition;
-                var res = client.Search<make>(s => s
-                .Query(q => q
-                .Match(m => m
-                .Field(f => f.Name)
-                .Field(f => f.Year)
-                .Query(query)))
-                );
+                var res = client.Search<CarList>(s => s
+                .Index<CarList>()
+        .Source(so => so
+            .Includes(f => f
+                .Field(ff => ff.Id)
+            )
+        )
+        .Suggest(su => su
+            .Completion("mm_suggest", cs => cs
+                .Field(f => f.mm_suggest)
+                .Prefix(query)
+                .Fuzzy(f => f
+                    .Fuzziness(Fuzziness.Auto)
+                )
+                .Size(10)
+            )
+        )
+    );
                 var doc = res.Documents;
-                return doc.ToList<make>();
+                //return doc.ToList<make>();
             }
             return null;
         }
@@ -162,7 +184,7 @@ namespace LearningNetcoreWebApp
                 new make {Id = 7, Wt = 3,  Name = "MB",    Year = 2022},
                 new make {Id = 8, Wt = 8,  Name = "Volvo",   Year = 2020},
                 new make {Id = 9, Wt = 7,  Name = "Reno",  Year = 2021},
-                new make {Id = 10,Wt = 5,   Name = "VW",  Year = 2021},
+                new make {Id = 10, Wt = 5,   Name = "VW",  Year = 2021},
             };
         }
 

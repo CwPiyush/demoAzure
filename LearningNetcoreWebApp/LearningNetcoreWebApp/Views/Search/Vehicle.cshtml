@@ -12,6 +12,7 @@
 
     <script src="~/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
     <link href="~/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+    <script src="~/js/Search.js"></script>
     <style>
         .disabled {
             pointer-events: all !important;
@@ -19,53 +20,75 @@
     </style>
 </head>
 <div class="form-group">
-    <div class="input-group">
-        <label class="form-check-label">Year</label>&nbsp;
-        <select class="dropdown" id="year" onchange="enableTextBox()">
-            <option value="">Select</option>
-            <option value="2020">2020</option>
-            <option value="2019">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-        </select>&nbsp;&nbsp;
+    <div class="input-group">        
         <label class="form-check-label">Enter Model</label>&nbsp;
-        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+        <div class="d-inline-block" tabindex="0" data-toggle="tooltip"
               data-placement="right" title="Select Year to Enter Model">
-            <input type="search" class="input-group-text" id="txtboxsearch"  disabled />
-        </span><br/>
-    
+            <input type="search" class="input-group-text" id="txtboxsearch" />
+        </div><br/>    
     </div>
 </div>
 <script type="text/javascript">
-    var enableTextBox = function () {
-        if (document.getElementById('year').value != '')
-            document.getElementById('txtboxsearch').disabled = false;
-        else
-            document.getElementById('txtboxsearch').disabled = true;
-    }
+//    var enableTextBox = function () {
+//        if (document.getElementById('year').value != '')
+//            document.getElementById('txtboxsearch').disabled = false;
+//        else
+//            document.getElementById('txtboxsearch').disabled = true;
+//    }
 
- var options = {
-    url: "api/search/autocomplete/car/?year=2020&term=ma",
+// var options = {
+//    url: "api/search/autocomplete/car/?year=2020&term=ma",
 
-    getValue: "name",
+//    getValue: "name",
 
-    template: {
-        type: "description",
-        fields: {
-            description: "email"
-        }
-    },
+//    template: {
+//        type: "description",
+//        fields: {
+//            description: "email"
+//        }
+//    },
 
-    list: {
-        match: {
-            enabled: true
-        }
-    },
+//    list: {
+//        match: {
+//            enabled: true
+//        }
+//    },
 
-    theme: "plate-dark"
-};
+//    theme: "plate-dark"
+//};
 
-$("#txtboxsearch").easyAutocomplete(options);        
+//$("#txtboxsearch").easyAutocomplete(options);  
+
+    var carInputSelector = $("#txtboxsearch");
+    var objCar = new Object();
+    carInputSelector.cdk_easyAutocomplete({
+            inputField: carInputSelector,
+            resultCount: 5,
+            source: 2,
+            onClear: function () {
+                objCar = new Object();
+            },
+            click: function (event, ui, orgTxt) {
+                var selectionValue = carInputSelector.getSelectedItemData().value,
+                selectionLabel = carInputSelector.getSelectedItemData().label;
+                objCar.Name = formatSpecial(selectionLabel);
+                objCar.Id = selectionValue;                
+                carInputSelector.blur();                
+            },
+            afterFetch: function (result) {
+                objCar.result = result;
+            },
+            focusout: function () {
+                if ((objCar.Name == undefined || objCar.Name == null || objCar.Name == '') && objCar.result != undefined && objCar.result != null && objCar.result.length > 0) {
+                    if (objCar.result[0].label.toLowerCase().indexOf(carInputSelector.val().toLowerCase()) == 0) {
+                        objCar.Name = formatSpecial(objCar.result[0].label);
+                        objCar.Id = formatSpecial(objCar.result[0].id);
+                        tyresHomepage.carRootId = objCar.Id;
+                        tyresHomepage.carRootName = objCar.result[0].label;
+                        carInputSelector.val(objCar.result[0].label);
+                    }
+                }
+            }
+        });    
     
 </script>
