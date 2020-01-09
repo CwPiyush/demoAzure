@@ -33,10 +33,9 @@
                         year = '';
                     }
 
-                    cacheProp = requestTerm + '_' + year;                    
+                    //cacheProp = requestTerm + '_' + year;                    
 
-                    if (requestTerm.length > 0) {
-                        if (!(cacheProp in cache) || cache[cacheProp] == undefined) {
+                    if (requestTerm.length > 0) {                        
                             var path;                            
                             path = "/api/search/autocomplete/car/?source=" + options.source + "&term=" + encodeURIComponent(requestTerm);                            
                             var par = '';                            
@@ -45,13 +44,7 @@
                                 par = par.slice(0, -1);
                                 path += '&' + par;
                             }
-                            return path;
-                        }
-                        else {
-                            return {
-                                data: cache[cacheProp]
-                            };
-                        }
+                            return path;                                               
                     }
                 },
 

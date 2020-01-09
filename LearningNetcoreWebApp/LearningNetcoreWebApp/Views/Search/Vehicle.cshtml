@@ -14,51 +14,21 @@
     <link href="~/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
     <script src="~/js/Search.js"></script>
     <style>
-        .disabled {
-            pointer-events: all !important;
-        }
+        .disabled {pointer-events: all !important;}
+        .align { padding-left: 16px; margin-top: -4px; }
+        .form-group { padding: 100px;}
     </style>
 </head>
 <div class="form-group">
     <div class="input-group">        
-        <label class="form-check-label">Enter Model</label>&nbsp;
-        <div class="d-inline-block" tabindex="0" data-toggle="tooltip"
+        <label class="form-check-label font-weight-bold">Enter make</label>&nbsp;
+        <div class="d-inline-block align" tabindex="0" data-toggle="tooltip"
               data-placement="right" title="Select Year to Enter Model">
-            <input type="search" class="input-group-text" id="txtboxsearch" />
+            <input type="text" class="input-group-text" id="txtboxsearch" />
         </div><br/>    
     </div>
 </div>
 <script type="text/javascript">
-//    var enableTextBox = function () {
-//        if (document.getElementById('year').value != '')
-//            document.getElementById('txtboxsearch').disabled = false;
-//        else
-//            document.getElementById('txtboxsearch').disabled = true;
-//    }
-
-// var options = {
-//    url: "api/search/autocomplete/car/?year=2020&term=ma",
-
-//    getValue: "name",
-
-//    template: {
-//        type: "description",
-//        fields: {
-//            description: "email"
-//        }
-//    },
-
-//    list: {
-//        match: {
-//            enabled: true
-//        }
-//    },
-
-//    theme: "plate-dark"
-//};
-
-//$("#txtboxsearch").easyAutocomplete(options);  
-
     var carInputSelector = $("#txtboxsearch");
     var objCar = new Object();
     carInputSelector.cdk_easyAutocomplete({
