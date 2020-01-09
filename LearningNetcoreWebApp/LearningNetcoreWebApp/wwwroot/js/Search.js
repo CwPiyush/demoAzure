@@ -65,7 +65,15 @@
 
                         cache[cacheProp] = [];                        
                     }
-                },                                
+                },
+                template: {
+                    type: "custom",
+                    method: function (value, item) {
+                        listElement = '<a class="list-item" cityname="' + item.result.replace(/\s/g, '').toLowerCase() + '">' + value + '</a>';
+
+                            return listElement;
+                    }
+                },
                 list: {
                     maxNumberOfElements: options.resultCount,
                     onChooseEvent: function (event) {

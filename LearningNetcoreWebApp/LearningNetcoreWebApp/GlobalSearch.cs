@@ -20,7 +20,7 @@ namespace LearningNetcoreWebApp
             settings.DefaultIndex("car");
         }
 
-        public List<make> GetResult(string condition)
+        public IEnumerable<SuggestOption<CarList>> GetResult(string condition)
         {
 
             if (client.IndexExists("vehiclecars").Exists)
@@ -38,16 +38,22 @@ namespace LearningNetcoreWebApp
 
                 var query = condition;
                 var res = client.Search<CarList>(s => s
-                .Index<CarList>()
-        .Source(so => so
-            .Includes(f => f
-                .Field(ff => ff.Id)
-            )
-        )
-        .Suggest(su => su
-            .Completion("mm_suggest", cs => cs
-                .Field(f => f.mm_suggest)
+                .Index("vehiclecars")
+    //            .Aggregations(a => a
+    //        .Terms("year", st => st
+    //        .Field(o => o.payload.Year)
+    //        .Size(10)
+    //        .Aggregations(aa => aa
+    //            .Max("max_Id", m => m
+    //                .Field(o => o.Id)
+    //            )
+    //        )
+    //    )
+    //)
+                .Suggest(su => su
+                .Completion("mm_suggest", cs => cs                
                 .Prefix(query)
+                .Field(f => f.mm_suggest)
                 .Fuzzy(f => f
                     .Fuzziness(Fuzziness.Auto)
                 )
@@ -55,8 +61,19 @@ namespace LearningNetcoreWebApp
             )
         )
     );
-                var doc = res.Documents;
-                //return doc.ToList<make>();
+                var res1 = client.Search<CarList>(s => s
+                .Index("vehiclecars")                
+                .Aggregations(a => a                
+            .Terms("SoldCount", st => st
+            .Field(f => f.payload.SoldCount)
+            .Size(10)
+            
+        )
+            ));
+                var doc = res.Suggest["mm_suggest"][0].Options;
+                var doc1 = res1.Documents;
+
+                return doc.Cast<SuggestOption<CarList>>();
             }
             return null;
         }
@@ -75,7 +92,7 @@ namespace LearningNetcoreWebApp
             }
         }
 
-        public object GetResult(int year, string term)
+        public IEnumerable<SuggestOption<CarList>> GetResult(int year, string term)
         {
             return GetResult(term);
         }
@@ -135,12 +152,7 @@ namespace LearningNetcoreWebApp
                 // return client.Index<T>(item, ind => ind.Index(indexName).Id(id));
             }
             AddDocumentES<CarList>(carList, indexName, obj => obj.Id);
-        }
-
-        private void AddDocumentToES(List<CarList> carList, string indexName, string p)
-        {
-            //client.Index<CarList>(carList, ind => ind.Index(indexName).Id(p));
-        }
+        }        
 
         private IBulkResponse AddDocumentES<T>(List<T> itemList, string indexName, Func<T, string> fieldSelector) where T : class
         {
@@ -170,23 +182,7 @@ namespace LearningNetcoreWebApp
             }
             return bulkResponse;
         }
-
-        private static List<make> PopulateCars()
-        {
-            return new List<make>
-            {
-                new make {Id = 1, Wt = 5,  Name = "Maruti",    Year = 2021},
-                new make {Id = 2, Wt = 6,  Name = "Tata",    Year = 2022},
-                new make {Id = 3, Wt = 7,  Name = "Toyota",   Year = 2023},
-                new make {Id = 4, Wt = 8,  Name = "Hyundai",    Year = 2024},
-                new make {Id = 5, Wt = 6,  Name = "Suzuki",   Year = 2021},
-                new make {Id = 6, Wt = 4,  Name = "Kia",    Year = 2024},
-                new make {Id = 7, Wt = 3,  Name = "MB",    Year = 2022},
-                new make {Id = 8, Wt = 8,  Name = "Volvo",   Year = 2020},
-                new make {Id = 9, Wt = 7,  Name = "Reno",  Year = 2021},
-                new make {Id = 10, Wt = 5,   Name = "VW",  Year = 2021},
-            };
-        }
+        
 
         public bool CreateIndex()
         {
@@ -205,13 +201,13 @@ namespace LearningNetcoreWebApp
         }
         private List<CarList> AddDocument()
         {
-            var list = PopulateCars();
+            var list = PopulateCars.GetAllCars();
             List<CarList> cars = new List<CarList>();
             foreach (var item in list)
             {
                 var temp = new CarList();
                 temp.Id = item.Id.ToString();
-                temp.name = item.Name.Trim();
+                temp.name = item.Name.Trim();                
                 temp.mm_suggest = new CarSuggestion();
                 temp.output = item.Name;
                 string vehicleName = item.Name.Trim();
@@ -222,6 +218,7 @@ namespace LearningNetcoreWebApp
                     Id = item.Id,
                     Name = item.Name.Trim(),
                     Year = item.Year,
+                    SoldCount = item.SoldCount,
                     DisplayName = item.Name.Trim()
                 };
 

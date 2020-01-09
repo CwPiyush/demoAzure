@@ -8,7 +8,7 @@ namespace LearningNetcoreWebApp
         public string Name { get; set; }
         public int Year { get; set; }
         public int Wt { get; set; }
-
+        public int SoldCount { get; set; }
     }
 
     public class CarList
@@ -30,7 +30,7 @@ namespace LearningNetcoreWebApp
         public int Id { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
+        public int SoldCount { get; set; }
         public int Year { get; set; }
-
     }
 }

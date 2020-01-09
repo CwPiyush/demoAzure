@@ -20,14 +20,14 @@
     </style>
 </head>
 <div class="form-group">
-    <div class="input-group">        
+    <div class="input-group">
         <label class="form-check-label font-weight-bold">Enter make</label>&nbsp;
-        <div class="d-inline-block align" tabindex="0" data-toggle="tooltip"
-              data-placement="right" title="Select Year to Enter Model">
-            <input type="text" class="input-group-text" id="txtboxsearch" />
-        </div><br/>    
+        <div class="align" tabindex="0" data-toggle="tooltip"
+                 data-placement="right" title="Enter Model">
+                <input type="text" class="input-group-text" id="txtboxsearch" />
+            </div><br />
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     var carInputSelector = $("#txtboxsearch");
     var objCar = new Object();
@@ -40,22 +40,21 @@
             },
             click: function (event, ui, orgTxt) {
                 var selectionValue = carInputSelector.getSelectedItemData().value,
-                selectionLabel = carInputSelector.getSelectedItemData().label;
-                objCar.Name = formatSpecial(selectionLabel);
+                selectionLabel = carInputSelector.getSelectedItemData().result;
+                objCar.Name = selectionLabel;
                 objCar.Id = selectionValue;                
-                carInputSelector.blur();                
+                carInputSelector.blur();
+                carInputSelector.val(selectionLabel);
             },
             afterFetch: function (result) {
                 objCar.result = result;
             },
             focusout: function () {
                 if ((objCar.Name == undefined || objCar.Name == null || objCar.Name == '') && objCar.result != undefined && objCar.result != null && objCar.result.length > 0) {
-                    if (objCar.result[0].label.toLowerCase().indexOf(carInputSelector.val().toLowerCase()) == 0) {
-                        objCar.Name = formatSpecial(objCar.result[0].label);
-                        objCar.Id = formatSpecial(objCar.result[0].id);
-                        tyresHomepage.carRootId = objCar.Id;
-                        tyresHomepage.carRootName = objCar.result[0].label;
-                        carInputSelector.val(objCar.result[0].label);
+                    if (objCar.result[0].label != carInputSelector.val()) {
+                        objCar.Name = objCar.result[0].label;
+                        objCar.Id = objCar.result[0].id;
+                        carInputSelector.val(objCar.result[0].result);
                     }
                 }
             }
